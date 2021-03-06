@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +7,35 @@
 	<title>AI</title>
 </head>
 <body>
-	<section id="filepicker">
-        </section>
-        <footer id="softkeys">
-            <div id="softkey-left">Help</div>
-            <div id="softkey-center">INSTALL</div>
-            <div id="softkey-right">Rescan</div>
-        </footer>
+	<input type="file" id="file">
+	<button id="btn">install</button>
+	<!--<section id="filepicker">
+        </section>-->
+        
+    <script>
+    	// https://raw.githubusercontent.com/Jasgun9/OM/main/application.zip
+    	function installPkg(packageFile) {
+    navigator.mozApps.mgmt.import(packageFile).then(function(){
+      alert('Installation successful!')
+    }).catch(e=>{
+      alert('Installation error: ' + e.name + ' ' + e.message)
+    })
+    let appGetter = navigator.mozApps.mgmt.getAll()
+    appGetter.onsuccess = function() {
+      let apps = appGetter.result
+      console.dir(apps)
+    }
+    appGetter.onerror = function(e) {
+      console.dir(this.error)
+    }
+  }
+
+  document.getElementById('btn').addEventListener('click',()=>{
+  	var file = document.getElementById('file');
+  	file = file.files[0].mozFullPath;
+  	installPkg(file)
+  })
+  
+    </script>
 </body>
 </html>
